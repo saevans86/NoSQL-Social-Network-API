@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
-const thoughtsSchema = require('./Thoughts')
-const friends = require('./Users')
+const thoughtsSchema = require('./Thought')
+// const friends = require('./User')
 
 const userSchema = new Schema({
     userId: {
@@ -30,7 +30,7 @@ const userSchema = new Schema({
         minLength: 5,
     },
     thoughts: [thoughtsSchema],
-    friends: [friends],
+    friends: [userSchema],
 
     toJSON: {
         getters: true
