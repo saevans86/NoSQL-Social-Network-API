@@ -2,52 +2,52 @@ const usernNames = [
     {
         username: 'user123',
         email: 'user123@example.com',
-        password: 'password123',
+     
     },
     {
         username: 'coolUser',
         email: 'cooluser@example.com',
-        password: 'securePassword',
+     
     },
     {
         username: 'webMaster',
         email: 'webmaster@example.com',
-        password: 'webPass123',
+   
     },
     {
         username: 'codingNinja',
         email: 'codingninja@example.com',
-        password: 'codeSecret',
+      
     },
     {
         username: 'geekGirl',
         email: 'geekgirl@example.com',
-        password: 'geek123',
+     
     },
     {
         username: 'codeWizard',
         email: 'codewizard@example.com',
-        password: 'magicCode',
+       
     },
     {
         username: 'SocialMediaGuru',
         email: 'socialguru@example.com',
-        password: 'guruPass',
+      
     },
     {
         username: 'Bookworm',
         email: 'bookworm@example.com',
-        password: 'readBooks',
+       
     },
     {
         username: 'CoffeeLover',
         email: 'coffeelover@example.com',
-        password: 'coffeeAddict',
+      
     },
     {
         username: 'AdventureSeeker',
         email: 'adventure@example.com',
-        password: 'explore123',
+       
     },
 ];
 
@@ -83,23 +83,16 @@ const arrRandomizer = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const randomUser = () => arrRandomizer(usernNames);
 
-const randomizer = (int) => {
-    const userData = [];
-    for (let i = 0; i < int; i++) {
-        const user = randomUser(); 
-        const thought = arrRandomizer(thoughts); 
-        const reaction = arrRandomizer(reactions); 
+const randomUserData = () => {
+	const user = randomUser();
+	const thought = arrRandomizer(thoughts);
+	const reaction = arrRandomizer(reactions);
 
-        userData.push({
-            user,
-            thought,
-            reaction,
-        });
-    }
-    return userData;
+	return {
+		user,
+		thought,
+		reaction
+	};
 };
 
-
-
-
-module.exports = { randomUser, randomizer }
+module.exports = { randomUserData };

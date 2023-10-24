@@ -11,7 +11,7 @@ module.exports = {
     },
     async getUser(req, res) {
         try {
-            const user = User.findOne({ _id: req.params.userId })
+            const user = await User.findOne({ _id: req.params.id })
                 .select('-__v')
             if (!user) {
                 return res.status(404).json({ message: 'No data found for that user ID.'})
@@ -32,9 +32,9 @@ module.exports = {
     async updateUser(req, res) {
         try {
             const updateUser = await User.findOneAndUpdate(
-                { _id: req.params.usersId },
+                { _id: req.params.id },
                 { $set: req.body },
-                {runValidators: true, new: true}
+                // {runValidators: true, new: true}
             )
             if (!updateUser) {
                 res.status(400).json({message: 'No user found'})
@@ -45,13 +45,13 @@ module.exports = {
     },
     async deleteUser (req, res) {
         try {
-            const deleteUser = await User.findOneAndDelete({ _id: req.params.userId });
+            const deleteUser = await User.findOneAndDelete({ _id: req.params.id });
 
             if (!deleteUser) {
                 res.status(404).json({ message: 'User not found' });
             }
 
-            await User.deleteMany({ _id: { $in: deleteUser.user } });
+            await User.deleteMany({ _id: { $in: deleteUser.id } });
             res.json({ message: 'Deleted' });
         } catch (err) {
             res.status(500).json(err);
