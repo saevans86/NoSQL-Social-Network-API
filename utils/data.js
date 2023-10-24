@@ -84,15 +84,21 @@ const arrRandomizer = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const randomUser = () => arrRandomizer(usernNames);
 
 const randomizer = (int) => {
-    const userThoughts = [];
+    const userData = [];
     for (let i = 0; i < int; i++) {
-        userThoughts.push({
-            reactions: arrRandomizer(reactions),
-            thoughts: arrRandomizer(thoughts),
+        const user = randomUser(); 
+        const thought = arrRandomizer(thoughts); 
+        const reaction = arrRandomizer(reactions); 
+
+        userData.push({
+            user,
+            thought,
+            reaction,
         });
     }
-    return userThoughts;
+    return userData;
 };
+
 
 
 

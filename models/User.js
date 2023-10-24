@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const userSchema = new Schema({
     userId: {
@@ -26,10 +26,9 @@ const userSchema = new Schema({
     },
     thoughts: [{ type: Schema.Types.ObjectId, ref: 'Thought' }],
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-
 });
 
-userSchema.set('toJSON', { getters: true }); 
+userSchema.set('toJSON', { getters: true });
 
 const User = model('User', userSchema);
 

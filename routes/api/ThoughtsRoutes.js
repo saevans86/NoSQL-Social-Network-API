@@ -6,15 +6,24 @@ const {
     postThought,
     putThought,
     deleteThought,
-    postReaction,
+    
    
 } = require('../../controllers/thoughtController.js')
+
 router.route('/').get(getThoughts).post(postThought)
-router.route('/:userId')
+router.route('/:thoughtTextId')
     .get(getThought)
     .get(putThought)
     .get(deleteThought)
-    .get(postReaction)
+ 
    
+const {
+    postReaction,
+    deleteReaction,
+} = require('../../controllers/thoughtController.js')
+router.route('/').post(postReaction).delete(deleteReaction)
+router.route('/:treactionId')
+    .get(postReaction)
+    .get(deleteReaction)
 
 module.exports = router

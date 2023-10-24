@@ -17,9 +17,12 @@ const reactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+        toJSON: {
+            virtuals: true,
+        },
     },
 });
 
-const Reactions = model('Reaction', reactionSchema);
+const Reactions = model('reaction', reactionSchema);
 
 module.exports = Reactions;

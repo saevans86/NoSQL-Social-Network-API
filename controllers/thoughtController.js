@@ -47,15 +47,15 @@ module.exports = {
             res.status(500).json(err)
         }
     },
-    async deleteReaction(req, res) {
+    async deleteThought(req, res) {
         try {
-            const deleteReaction = await Thoughts.findOneAndDelete({ _id: req.params.thoughtTextId });
+            const deleteThought = await Thoughts.findOneAndDelete({ _id: req.params.thoughtTextId });
 
-            if (!deleteReaction) {
+            if (!deleteThought) {
                 res.status(404).json({ message: 'Thoughts not found' });
             }
 
-            await Thoughts.deleteMany({ _id: { $in: deleteReaction.thoughtTextId } });
+            await Thoughts.deleteMany({ _id: { $in: deleteThought.thoughtTextId } });
             res.json({ message: 'Deleted' });
         } catch (err) {
             res.status(500).json(err);
@@ -74,15 +74,15 @@ module.exports = {
         return res.status(500).json(err)
     }
     },
-        async deleteThought(req, res) {
+        async deleteReaction(req, res) {
         try {
-            const deleteThought = await Reactions.findOneAndDelete({ _id: req.params.reactionId });
+            const deleteReaction = await Reactions.findOneAndDelete({ _id: req.params.reactionId });
 
-            if (!deleteThought) {
-                res.status(404).json({ message: 'Thoughts not found' });
+            if (!deleteReaction) {
+                res.status(404).json({ message: 'Reaction not found' });
             }
 
-            await Reactions.deleteMany({ _id: { $in: deleteThought.reactionId } });
+            await Reactions.deleteMany({ _id: { $in: deleteReaction.reactionId } });
             res.json({ message: 'Deleted' });
         } catch (err) {
             res.status(500).json(err);
