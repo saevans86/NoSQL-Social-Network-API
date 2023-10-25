@@ -8,8 +8,8 @@ const userSchema = new Schema(
 			required: true,
 			unique: true,
 			trim: true,
+			minLength: 5,
 			maxLength: 20,
-			minLength: 5
 		},
 		email: {
 			type: String,
@@ -41,9 +41,9 @@ const userSchema = new Schema(
 		id: false
 	}
 );
-userSchema.virtual("friendCount").get(function () {
-    return this.friends.length
-})
+userSchema.virtual('friendCount').get(function () {
+	return this.friends.length;
+});
 
 const User = model('User', userSchema);
 
