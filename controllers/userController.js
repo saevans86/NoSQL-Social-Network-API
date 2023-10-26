@@ -71,5 +71,43 @@ module.exports = {
 		} catch (err) {
 			return res.status(500).json(err);
 		}
-	}
+	},
+	async removeFriend(req, res) {
+		try {
+			const userId = req.params.usersId;
+			const friendId = req.params.friendsId;
+
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: userId },
+				{ $pull: { friends: friendId } },
+				{ runValidators: true, new: true }
+			);
+
+			if (!updatedUser) {
+				return res.status(404).json({ message: "User not found" });
+			}
+
+			res.json(updatedUser);
+		} catch (err) {
+			return res.status(500).json(err);
+		}
+	},
+	// async postThought(req, res) {
+	// 	console.log('adding thought')
+	// 	console.log(req.body)
+	// 	try {
+	// 		const newThought = await User.findOneAndUpdate(
+	// 			{ _id: req.params.usersId },
+	// 			{ $addToSet: { thoughts: req.body } },
+	// 			{runValidators: true, new: true},
+	// 		)
+	// 		if (!newThought) {
+	// 			return res.status(404).json({ message: 'Not found'})
+	// 		}
+	// 		res.json(newThought)
+	// 	} catch (err) {
+	// 		res.status(500).json(err)
+	// 	}
+	// }
+
 };
