@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thoughts } = require('../models');
 
 module.exports = {
 	async getUsers(req, res) {
@@ -65,7 +65,7 @@ module.exports = {
 			);
 
 			if (!newFriend) {
-				return res.status(404)({ meessage: 'not found'})
+				return res.status(404)({ meessage: 'not found' });
 			}
 			res.json(newFriend);
 		} catch (err) {
@@ -84,7 +84,7 @@ module.exports = {
 			);
 
 			if (!updatedUser) {
-				return res.status(404).json({ message: "User not found" });
+				return res.status(404).json({ message: 'User not found' });
 			}
 
 			res.json(updatedUser);
@@ -92,22 +92,5 @@ module.exports = {
 			return res.status(500).json(err);
 		}
 	},
-	// async postThought(req, res) {
-	// 	console.log('adding thought')
-	// 	console.log(req.body)
-	// 	try {
-	// 		const newThought = await User.findOneAndUpdate(
-	// 			{ _id: req.params.usersId },
-	// 			{ $addToSet: { thoughts: req.body } },
-	// 			{runValidators: true, new: true},
-	// 		)
-	// 		if (!newThought) {
-	// 			return res.status(404).json({ message: 'Not found'})
-	// 		}
-	// 		res.json(newThought)
-	// 	} catch (err) {
-	// 		res.status(500).json(err)
-	// 	}
-	// }
 
 };

@@ -15,7 +15,11 @@ const thoughtSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    reactions: [{ type: Schema.Types.ObjectId, ref: 'Reaction' }], 
+    reactions: [
+        {
+            type: Schema.Types.ObjectId, ref: 'Reaction'
+        }
+    ], 
 });
 
 thoughtSchema.virtual('reactionCount').get(function () {
