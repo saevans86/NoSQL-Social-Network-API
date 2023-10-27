@@ -38,6 +38,7 @@ module.exports = {
 			if (!updateUser) {
 				res.status(400).json({ message: 'No user found' });
 			}
+			res.json(updateUser);
 		} catch (err) {
 			res.status(500).json(err);
 		}
@@ -45,12 +46,18 @@ module.exports = {
 	async deleteUser(req, res) {
 		try {
 			const deleteUser = await User.findOneAndDelete({ _id: req.params.usersId });
+			const removeThoughts = await Thoughts.deleteMany({ _id: req.params.thoughtsId})
 
-			if (!deleteUser) {
-				res.status(404).json({ message: 'User not found' });
+			if (!removeThoughts) {
+				res.status(404).json({ message: 'Thoughts not found for user '})
 			}
+			res.json({ messgage: 'Deleted' })
+			
+				if (!deleteUser) {
+					res.status(404).json({ message: 'User not found' });
+				}
 
-			await User.deleteMany({ _id: { $in: deleteUser.usersId } });
+			
 			res.json({ message: 'Deleted' });
 		} catch (err) {
 			res.status(500).json(err);

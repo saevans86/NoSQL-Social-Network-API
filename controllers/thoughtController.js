@@ -26,18 +26,16 @@ module.exports = {
 	async postThought(req, res) {
 		try {
 			const thoughtText = await Thoughts.create(req.body);
-			console.log(req.body)
+			// console.log(req.body)
 			const user = await User.findOneAndUpdate(
 				{ username: req.body.username },
 				{ $addToSet: { thoughtText: thoughtText.thoughtText } },
 				{ new: true }
 			);
-console.log(req.body);
+// console.log(req.body);
 			if (!user) {
 				return res.status(404).json({ message: 'thought posted, not posted to user.' });
 			}
-
-			
 			res.json(thoughtText);
 		} catch (err) {
 			console.error(err);
@@ -48,13 +46,15 @@ console.log(req.body);
 	async putThought(req, res) {
 		try {
 			const updateThought = await Thoughts.findOneAndUpdate(
-				{ _id: req.params.id },
+				{ _id: req.params.thoughtsId },
 				{ $set: req.body },
-				{ runValidators: true, new: true }
+				{  new: true }
 			);
+			console.log(updateThought)
 			if (!updateThought) {
 				res.status(400).json({ message: 'No Thoughts found' });
 			}
+			res.json(updateThought);
 		} catch (err) {
 			res.status(500).json(err);
 		}
