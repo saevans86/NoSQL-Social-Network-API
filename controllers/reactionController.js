@@ -1,63 +1,54 @@
-// //unsure if needed as of yet
+// // //unsure if needed as of yet
 
-// const { Reactions } = require('..');
+// const { Reactions, Thoughts } = require('../models');
 
 // module.exports = {
-// 	async getUsers(req, res) {
+
+// 	async postReaction(req, res) {
 // 		try {
-// 			const users = await Reactions.find();
-// 			res.json(users);
-// 		} catch (err) {
-// 			res.status(500).json(err);
-// 		}
-// 	},
-// 	async getUser(req, res) {
-// 		try {
-// 			const user = Reactions.findOne({ _id: req.params.userId }).select('-__v');
-// 			if (!user) {
-// 				return res.status(404).json({ message: 'No data found for that user ID.' });
+// 			const reactionBody = await Reactions.create(req.body);
+// 			console.log(reactionBody);
+//             const updateThought = await Thoughts.findOneAndUpdate(
+            
+//                 {_id: req.body.reactionsId},
+// 				{ username: req.body.username },
+// 				{ $addToSet: { reactionBody: reactionBody.reactionBody } },
+// 				{ new: true }
+// 			);
+// 			console.log(req.body);
+
+// 			if (!updateThought) {
+// 				return res.status(404).json({ message: ' Reaction not posted to thought' });
 // 			}
-// 			res.json(user);
-// 		} catch (err) {
-// 			res.status(500).json(err);
-// 		}
-// 	},
-// 	async createUser(req, res) {
-// 		try {
-// 			const newUser = await Reactions.create(req.body);
-// 			res.json(newUser);
+
+// 			res.json(reactionBody);
 // 		} catch (err) {
 // 			return res.status(500).json(err);
 // 		}
 // 	},
-// 	async updateUser(req, res) {
+// 	async deleteReaction(req, res) {
 // 		try {
-// 			const updateUser = await Reactions.findOneAndUpdate(
-// 				{ _id: req.params.usersId },
-// 				{ $set: req.body },
-// 				{ runValidators: true, new: true }
-// 			);
-// 			if (!updateUser) {
-// 				res.status(400).json({ message: 'No user found' });
-// 			}
-// 		} catch (err) {
-// 			res.status(500).json(err);
-// 		}
-// 	},
-// 	async deleteUser(req, res) {
-// 		try {
-// 			const deleteUser = await Reactions.findOneAndDelete({
-// 				_id: req.params.userId
+// 			const deleteReaction = await Reactions.findOneAndDelete({
+// 				_id: req.params.reactionId
 // 			});
 
-// 			if (!deleteUser) {
-// 				res.status(404).json({ message: 'User not found' });
+// 			if (!deleteReaction) {
+// 				res.status(404).json({ message: 'Reaction not found' });
 // 			}
 
-// 			await Reactions.deleteMany({ _id: { $in: deleteUser.user } });
+// 			await Reactions.deleteMany({ _id: { $in: deleteReaction.id } });
 // 			res.json({ message: 'Deleted' });
 // 		} catch (err) {
 // 			res.status(500).json(err);
 // 		}
-// 	}
+// 	},
+// 		async getReactions(req, res) {
+// 			try {
+// 				const reactions = await Reactions.find();
+
+// 				res.json(reactions);
+// 			} catch (err) {
+// 				res.status(500).json(err);
+// 			}
+// 		},
 // };
