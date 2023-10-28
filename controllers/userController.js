@@ -45,21 +45,21 @@ module.exports = {
 	},
 	async deleteUser(req, res) {
 		try {
-			const user = await User.findOneAndDelete({ _id: req.params.usersId });
+			const deleteUser = await User.findOneAndDelete({ _id: req.params.usersId });
+			const removeThoughts = await Thoughts.deleteMany({
+				_id: req.params.thoughtsId
+			});
 
-			if (!user) {
+			if (!removeThoughts) {
+				res.status(404).json({ message: 'Thoughts not found for user ' });
+			}
+			res.json({ messgage: 'Deleted' });
+
+			if (!deleteUser) {
 				res.status(404).json({ message: 'User not found' });
 			}
 
-			//remove thoughts not working atm, may return to working this.
-			// const removeThoughts = await Thoughts.deleteMany({
-			// 	_id: { $in: user.thoughts }
-			// });
-
-
-			// res.json(removeThoughts);
-			console.log(removeThoughts);
-			res.json({ messgage: 'User and associated thoughts deleted' });
+			res.json({ message: 'Deleted' });
 		} catch (err) {
 			res.status(500).json(err);
 		}

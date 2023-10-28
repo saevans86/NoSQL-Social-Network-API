@@ -1,11 +1,13 @@
 const { Thoughts, User } = require('../models');
 
+
+
 module.exports = {
 	async getThoughts(req, res) {
 		try {
-			const thoughts = await Thoughts.find();
+			const thoughts = await Thoughts.find()
 			res.json(thoughts);
-		} catch (err) {
+		} catch (err) { 
 			res.status(500).json(err);
 		}
 	},
@@ -30,7 +32,7 @@ module.exports = {
 			const user = await User.findOneAndUpdate(
 				{ username: req.body.username },
 				{ $addToSet: { thoughtText: thoughtText.thoughtText } },
-				{ new: true }
+				{ runValidators: true, new: true }
 			);
 			// console.log(req.body);
 			if (!user) {
@@ -71,7 +73,6 @@ module.exports = {
 				res.status(404).json({ message: 'Thoughts not found' });
 			}
 
-			await Thoughts.deleteMany({ _id: { $in: deleteThought.Id } });
 			res.json({ message: 'Deleted' });
 		} catch (err) {
 			res.status(500).json(err);
@@ -79,11 +80,11 @@ module.exports = {
 	},
 	async postReaction(req, res) {
 		try {
-			console.log(req.body);
-			
+			// console.log(req.body);
+
 			const addReactions = await Thoughts.findOneAndUpdate(
-				{ username: req.body.username },
-				{ $addToSet: { reactionBody: req.reactionBody } },
+				{ _id: req.params.thoughtsId },
+				{ $addToSet: { reactions: req.body } },
 				{ runValidators: true, new: true }
 			);
 			console.log(req.body);
@@ -112,5 +113,5 @@ module.exports = {
 		} catch (err) {
 			res.status(500).json(err);
 		}
-	},
+	}
 };
