@@ -45,21 +45,21 @@ module.exports = {
 	},
 	async deleteUser(req, res) {
 		try {
-			const deleteUser = await User.findOneAndDelete({ _id: req.params.usersId });
-			const removeThoughts = await Thoughts.deleteMany({
-				_id: req.params.thoughtsId
-			});
+			const userId = req.params.usersId;
 
-			if (!removeThoughts) {
-				res.status(404).json({ message: 'Thoughts not found for user ' });
-			}
-			res.json({ messgage: 'Deleted' });
+			const deleteUser = await User.findOneAndDelete({ _id: userId });
 
 			if (!deleteUser) {
-				res.status(404).json({ message: 'User not found' });
+				return res.status(404).json({ message: 'User not found' });
+			}
+			const removeThoughts = await Thoughts.deleteMany({
+				username: deleteUser.username
+			});
+			if (!removeThoughts) {
+				return res.status(404).json({ message: 'Thoughts not found for the user' });
 			}
 
-			res.json({ message: 'Deleted' });
+			res.json({ message: 'User and associated thoughts deleted' });
 		} catch (err) {
 			res.status(500).json(err);
 		}
