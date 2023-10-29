@@ -7,6 +7,7 @@ module.exports = {
 		try {
 			const thoughts = await Thoughts.find()
 			res.json(thoughts);
+			console.log(thoughts)
 		} catch (err) { 
 			res.status(500).json(err);
 		}
@@ -19,7 +20,7 @@ module.exports = {
 			if (!getThought) {
 				return res.status(404).json({ message: 'Not found! ' });
 			}
-
+			console.log(getThought);
 			res.json(getThought);
 		} catch (err) {
 			res.status(500).json(err);
@@ -34,7 +35,7 @@ module.exports = {
 				{ $addToSet: { thoughtText: thoughtText.thoughtText } },
 				{ runValidators: true, new: true }
 			);
-			// console.log(req.body);
+			console.log(thoughtText, 'Added');
 			if (!user) {
 				return res
 					.status(404)
@@ -54,7 +55,7 @@ module.exports = {
 				{ $set: req.body },
 				{ new: true }
 			);
-			console.log(updateThought);
+			console.log(updateThought, 'Updated');
 			if (!updateThought) {
 				res.status(400).json({ message: 'No Thoughts found' });
 			}
@@ -80,14 +81,14 @@ module.exports = {
 	},
 	async postReaction(req, res) {
 		try {
-			// console.log(req.body);
+			
 
 			const addReactions = await Thoughts.findOneAndUpdate(
 				{ _id: req.params.thoughtsId },
 				{ $addToSet: { reactions: req.body } },
 				{ runValidators: true, new: true }
 			);
-			console.log(req.body);
+			console.log(addReactions, 'Posted');
 
 			if (!addReactions) {
 				return res.status(404).json({ message: ' Reaction not posted.' });
@@ -104,6 +105,7 @@ module.exports = {
 				_id: req.params.reactionId
 			});
 
+				console.log('Deleted');
 			if (!deleteReaction) {
 				res.status(404).json({ message: 'Reaction not found' });
 			}

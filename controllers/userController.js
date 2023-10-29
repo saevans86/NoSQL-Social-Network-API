@@ -5,6 +5,7 @@ module.exports = {
 		try {
 			const users = await User.find();
 			res.json(users);
+			console.log(users);
 		} catch (err) {
 			res.status(500).json(err);
 		}
@@ -15,6 +16,7 @@ module.exports = {
 			if (!user) {
 				return res.status(404).json({ message: 'No data found for that user ID.' });
 			}
+				console.log(user);
 			res.json(user);
 		} catch (err) {
 			res.status(500).json(err);
@@ -35,6 +37,7 @@ module.exports = {
 				{ $set: req.body },
 				{ runValidators: true, new: true }
 			);
+			console.log('User updated')
 			if (!updateUser) {
 				res.status(400).json({ message: 'No user found' });
 			}
@@ -71,7 +74,7 @@ module.exports = {
 				{ $addToSet: { friends: req.body } },
 				{ runValidators: true, new: true }
 			);
-
+console.log(newFriend, 'Added')
 			if (!newFriend) {
 				return res.status(404)({ meessage: 'not found' });
 			}
@@ -90,7 +93,7 @@ module.exports = {
 				{ $pull: { friends: friendId } },
 				{ runValidators: true, new: true }
 			);
-
+ console.log('Friend removed')
 			if (!updatedUser) {
 				return res.status(404).json({ message: 'User not found' });
 			}
