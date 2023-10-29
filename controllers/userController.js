@@ -1,6 +1,7 @@
 const { User, Thoughts } = require('../models');
 
 module.exports = {
+	//find all users
 	async getUsers(req, res) {
 		try {
 			const users = await User.find();
@@ -10,6 +11,7 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//find user by its Id
 	async getUser(req, res) {
 		try {
 			const user = await User.findOne({ _id: req.params.usersId }).select('-__v');
@@ -22,6 +24,7 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//creates a new user
 	async createUser(req, res) {
 		try {
 			const newUser = await User.create(req.body);
@@ -30,6 +33,7 @@ module.exports = {
 			return res.status(500).json(err);
 		}
 	},
+	//update user by it's ID
 	async updateUser(req, res) {
 		try {
 			const updateUser = await User.findOneAndUpdate(
@@ -46,6 +50,7 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	// delete user by its ID and include any thoughts associated with that user
 	async deleteUser(req, res) {
 		try {
 			const userId = req.params.usersId;
@@ -67,6 +72,7 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//add friend by userID, then by the user Model's reference to friends
 	async addFriend(req, res) {
 		try {
 			const newFriend = await User.findOneAndUpdate(
@@ -74,7 +80,7 @@ module.exports = {
 				{ $addToSet: { friends: req.body } },
 				{ runValidators: true, new: true }
 			);
-console.log(newFriend, 'Added')
+// console.log(newFriend, 'Added')
 			if (!newFriend) {
 				return res.status(404)({ meessage: 'not found' });
 			}
@@ -83,6 +89,7 @@ console.log(newFriend, 'Added')
 			return res.status(500).json(err);
 		}
 	},
+	// removes friend by user ID, then specifying the friend ID to remove.
 	async removeFriend(req, res) {
 		try {
 			const userId = req.params.usersId;
@@ -93,7 +100,7 @@ console.log(newFriend, 'Added')
 				{ $pull: { friends: friendId } },
 				{ runValidators: true, new: true }
 			);
- console.log('Friend removed')
+//  console.log('Friend removed')
 			if (!updatedUser) {
 				return res.status(404).json({ message: 'User not found' });
 			}

@@ -1,17 +1,17 @@
 const { Thoughts, User } = require('../models');
 
-
-
 module.exports = {
+	//get method for all thoughts
 	async getThoughts(req, res) {
 		try {
-			const thoughts = await Thoughts.find()
+			const thoughts = await Thoughts.find();
 			res.json(thoughts);
-			console.log(thoughts)
-		} catch (err) { 
+			// console.log(thoughts)
+		} catch (err) {
 			res.status(500).json(err);
 		}
 	},
+	//get method for a single thought by its ID
 	async getThought(req, res) {
 		try {
 			const getThought = await Thoughts.findOne({
@@ -26,16 +26,16 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//adds new thought to the DB by username, then adds the thoughtText to the user, then validates the data, and posts it as new data
 	async postThought(req, res) {
 		try {
 			const thoughtText = await Thoughts.create(req.body);
-			// console.log(req.body)
 			const user = await User.findOneAndUpdate(
 				{ username: req.body.username },
 				{ $addToSet: { thoughtText: thoughtText.thoughtText } },
 				{ runValidators: true, new: true }
 			);
-			console.log(thoughtText, 'Added');
+			// console.log(thoughtText, 'Added');
 			if (!user) {
 				return res
 					.status(404)
@@ -48,6 +48,7 @@ module.exports = {
 		}
 	},
 
+	// updates a single thought by the thoughtId
 	async putThought(req, res) {
 		try {
 			const updateThought = await Thoughts.findOneAndUpdate(
@@ -55,7 +56,7 @@ module.exports = {
 				{ $set: req.body },
 				{ new: true }
 			);
-			console.log(updateThought, 'Updated');
+			// console.log(updateThought, 'Updated');
 			if (!updateThought) {
 				res.status(400).json({ message: 'No Thoughts found' });
 			}
@@ -64,6 +65,7 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//delete a single thought by its ID
 	async deleteThought(req, res) {
 		try {
 			const deleteThought = await Thoughts.findOneAndDelete({
@@ -79,16 +81,15 @@ module.exports = {
 			res.status(500).json(err);
 		}
 	},
+	//adds a reaction to a user post by the thought Id, then adding a reaction. 
 	async postReaction(req, res) {
 		try {
-			
-
 			const addReactions = await Thoughts.findOneAndUpdate(
 				{ _id: req.params.thoughtsId },
 				{ $addToSet: { reactions: req.body } },
 				{ runValidators: true, new: true }
 			);
-			console.log(addReactions, 'Posted');
+			// console.log(addReactions, 'Posted');
 
 			if (!addReactions) {
 				return res.status(404).json({ message: ' Reaction not posted.' });
@@ -99,13 +100,14 @@ module.exports = {
 			return res.status(500).json(err);
 		}
 	},
+	//delete reaction by a its ID
 	async deleteReaction(req, res) {
 		try {
 			const deleteReaction = await Reactions.findOneAndDelete({
 				_id: req.params.reactionId
 			});
 
-				console.log('Deleted');
+			console.log('Deleted');
 			if (!deleteReaction) {
 				res.status(404).json({ message: 'Reaction not found' });
 			}

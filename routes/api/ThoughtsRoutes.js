@@ -1,4 +1,5 @@
 const router = require('express').Router();
+//imports our controller files
 
 const {
 	getThoughts,
@@ -9,6 +10,7 @@ const {
 	postReaction,
 	
 } = require('../../controllers/thoughtController.js');
+// endpoint routes to use in insomnia
 
 router.route('/').get(getThoughts).post(postThought);
 router

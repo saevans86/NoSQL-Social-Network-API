@@ -1,9 +1,8 @@
 const router = require('express').Router();
-// const reactions = require('./ReactionsRoutes');
 const thoughts = require('./ThoughtsRoutes');
 const users = require('./UserRoutes');
 
-// router.use('/reactions', reactions);
+//thoughts and users endpoints 
 router.use('/thoughts', thoughts);
 router.use('/users', users)
 

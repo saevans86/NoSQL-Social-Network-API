@@ -1,5 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
+//reaction schema only
 const reactionSchema = new Schema(
 	{
 		reactionId: {
@@ -29,6 +30,7 @@ const reactionSchema = new Schema(
 		}
 	}
 );
+// thought model with reference to the reactionsSchema
 const thoughtSchema = new Schema(
 	{
 		username: {
@@ -55,7 +57,7 @@ const thoughtSchema = new Schema(
 		id: false
 	}
 );
-
+// returns the virtual reaction count
 thoughtSchema.virtual('reactionCount').get(function () {
 	return this.reactions.length;
 });

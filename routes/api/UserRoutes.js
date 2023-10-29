@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+//imports our controller files
 const {
 	getUsers,
 	getUser,
@@ -10,6 +10,7 @@ const {
 	removeFriend,
 	
 } = require('../../controllers/userController.js');
+// endpoint routes to use in insomnia
 router.route('/').get(getUsers).post(createUser)
 router.route('/:usersId').get(getUser).put(updateUser).delete(deleteUser);
 
