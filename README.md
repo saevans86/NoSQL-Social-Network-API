@@ -11,7 +11,7 @@
 
 
 
-## Table of Contents (Optional)
+## Table of Contents
 
 
 - [Installation](#installation)
@@ -27,6 +27,15 @@ Running NPM install should add the required modules to run this project!
 ## Usage 
 Using Insomnia, the user should be able to perform the actions/remove/update users, add/remove their friends, add/remove/update thoughts, add reactions to thoughts, and remove reactions to thoughts. 
 
+
+
+https://github.com/saevans86/NoSQL-Social-Network-API/assets/130856120/7e4b5d2c-1159-412d-97ca-07e841d766e7
+
+
+
+
+![Screenshot 2023-10-29 153436](https://github.com/saevans86/NoSQL-Social-Network-API/assets/130856120/74bd8b39-c047-4ffb-9c33-0c6c86935a4e)
+![Screenshot 2023-10-29 153423](https://github.com/saevans86/NoSQL-Social-Network-API/assets/130856120/41ca5ea7-adaf-4171-b6d2-37da9f953395)
 
 
     
